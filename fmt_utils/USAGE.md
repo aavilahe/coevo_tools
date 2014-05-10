@@ -1,6 +1,6 @@
-## Examples ##
+# Usage - Formatting utilities #
 
-### `concatenate_fastas.py`
+## `concatenate_fastas.py`
 Concatenates pairs of sequences from two alignments.
 Headers must exactly match (seq id and comment) and be unique within each fasta.
 Unpaired sequences are skipped, whitespace is removed from sequence.
@@ -9,7 +9,7 @@ Unpaired sequences are skipped, whitespace is removed from sequence.
 usage: ./concatenate_fastas.py left.fa right.fa > left_right.fa
 ```
 
-### `fasta_to_phy.py`
+## `fasta_to_phy.py`
 Convert fasta to "strict" phylip:
 
 - header: `' Nseqs Ncol'`
@@ -25,7 +25,7 @@ Whitespace is removed from sequence.
 usage: ./fasta_to_phy.py < fasta > phy
 ```
 
-### `fasta_to_psicov.py`
+## `fasta_to_psicov.py`
 Convert fasta to PSICOV readable format
 	- one sequence per line, no headers
 Discard all headers, remove whitespace from sequence.
@@ -34,7 +34,7 @@ Discard all headers, remove whitespace from sequence.
 usage: ./fasta_to_psicov.py < fasta > psicov
 ```
 
-### `fix_dummy_pvalues.py`
+## `fix_dummy_pvalues.py`
 Compares co-evolution scores measured from an observed alignment to from alignments
 simulated under a null distribution to estimate a p-value.
 Scores are in a tab delimited format output by `make_tab.py`
@@ -46,7 +46,7 @@ _NOTE: relevant scores are in different columns, depending on co-evolution progr
 ./fix_dummy_pvalues.py mfDCA 1000 <(cat sim1.tab sim2.tab ... sim1000.tab) < scores.tab > scores_pvalues.tab
 ```
 
-### `make_tab.py`
+## `make_tab.py`
 Formats the raw output from co-evolution programs into a tab delimited file.
 
 1. **Sets alignment column indices to start at `0`**
@@ -63,7 +63,7 @@ usage: ./make_tab.py fmt last_left < output > output_tab
  last_left: length of left protein alignment
 ```
 
-### `split_faa_on_col.py`
+## `split_faa_on_col.py`
 Halve an aligned fasta on a specified column. Does not modify sequence order. Appends `'_L|R'` to
 sequence ids, comment is included in output untouched.
 
