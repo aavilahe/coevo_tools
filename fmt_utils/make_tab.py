@@ -4,7 +4,7 @@
 	Steps:
 		1. Whitespace (or comma for plmDCA) to tab '\t'
 		2. Left, Right positions in first, second columns respectively
-		3. Keep only intra-protein pairs
+		3. Keep only inter-protein pairs
 		4. Re-number concatenated aln to match split alns
 		5. Make numberings start at 0
 		6. Add dummy p-values
