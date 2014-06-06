@@ -11,6 +11,16 @@ Call matlab to run mfDCA with default options.
 usage: ./runDCA.sh in.fa out.mfDCA
 ```
 
+#### parallelization
+Calls `runDCA.sh` to run on all fasta files in `indir`
+
+- Requires `parallel` from moreutils package (not GNU parallel)
+- Use `-j N` to specify N parallel threads
+
+```bash
+usage: ./dirDCA.sh indir outdir
+```
+
 ### plmDCA (symmetric) 
 Call matlab to run plmDCA with default options, and set number of cpus.
 - source: <http://plmdca.csc.kth.se/>
