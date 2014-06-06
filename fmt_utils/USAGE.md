@@ -35,8 +35,8 @@ usage: ./fasta_to_psicov.py < fasta > psicov
 ```
 
 ## `fix_dummy_pvalues.py`
-Compares co-evolution scores measured from an observed alignment to from alignments
-simulated under a null distribution to estimate a p-value.
+Compares co-evolution scores measured from an observed alignment to scores from 
+alignments simulated under a null distribution to estimate a p-value.
 Scores are in a tab delimited format output by `make_tab.py`
 
 _NOTE: relevant scores are in different columns, depending on co-evolution program used_ 
