@@ -1,0 +1,4 @@
+#!/bin/bash
+# kill all submitted jobs
+qdel $(qstat | tail -n+3 | awk '{print $1}')
+

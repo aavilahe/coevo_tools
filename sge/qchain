@@ -1,0 +1,24 @@
+#!/bin/bash
+# submit a list of job-arrays in a chained fashion
+
+
+if [ $# -le 0 ]; then
+	echo "usage: $0 job0.qsub job1.qsub job2.qsub ... jobN.qsub"
+	exit
+fi
+
+QSUB_LIST="${@}"
+
+PREV_JID=""
+for QSUB in ${QSUB_LIST}; do
+	if [ -n "${PREV_JID}" ]; then
+		HOLD="-hold_jid ${PREV_JID}"
+	else
+		HOLD=""
+	fi
+	echo "calling qsub on ${QSUB} -- waiting for <${PREV_JID}>"
+	QMSG=$(qsub ${HOLD} ${QSUB})
+	echo ${QMSG} # Your job-array 8494841.1-10:1 ("psi-0__HisKA_RR-master-1000-0-sims.qsub") has been submitted
+	PREV_JID=$(echo ${QMSG} | perl -ne '/Your job-array (\d+)\.(\d+)-(\d+):(\d+)/ ; print $1')
+	sleep 0.1
+done
