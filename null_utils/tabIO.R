@@ -60,7 +60,9 @@ addPemp = function(tab, column_labels){
 	return(tab)
 }
 
-addZscore = function(tab, column_labels){
+addPnorm = function(tab, column_labels){
+	# Calculate Pnormal values for scores give in "column_labels"
+	# and add them to "tab" data.frame
 	zscore_these_labels = grep('^p_', column_labels, invert=TRUE, value=TRUE)
 	for(label in zscore_these_labels){
 		flip = (set_whatCmp(label, 'Score') == '<')
@@ -71,7 +73,7 @@ addZscore = function(tab, column_labels){
 		} else {
 			Z = scale(x)
 		}
-		tab[, zlabel] = Z
+		tab[, zlabel] = pnorm(Z, lower.tail=FALSE)
 	}
 	return(tab)
 }
@@ -88,7 +90,7 @@ loadTab_infStats = function(fn, suff=NULL){
 	tab = loadTab(fn, column_labels)
 	tab = fixNAs(tab, column_labels)
 	tab = addPemp(tab, column_labels)
-	tab = addZscore(tab, column_labels)
+	tab = addPnorm(tab, column_labels)
 	return(tab)
 }
 
@@ -101,8 +103,8 @@ loadTab_mfdca = function(fn, suff=NULL){
 #	tab[, column_labels[c(3,4)]] = tab[, column_labels[c(3,4)]] / 1000 # hard coded
 	tab = fixNAs(tab, column_labels)
 	tab = addPemp(tab, column_labels)
-	#tab = addZscore(tab, column_labels[1]) # add zscores for dcaMI only
-	tab = addZscore(tab, column_labels) # add zscores for dcaMI and dcaDI
+	#tab = addPnorm(tab, column_labels[1]) # add zscores for dcaMI only
+	tab = addPnorm(tab, column_labels) # add zscores for dcaMI and dcaDI
 	return(tab)
 }
 
