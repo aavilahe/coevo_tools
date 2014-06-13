@@ -1,13 +1,12 @@
-#R read various types of tab files
+# tabIO.R -- read various types of "tab" files
 
-# TODO: write loaders for PSICOV, CAPS, plmDCA
 #cat('loadTab_mfdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
 #cat('loadTab_plmdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
 #cat('loadTab_psicov() is hard coded to assume 1000 bootstraps\n', file=stderr())
 #cat('loadTab_hpdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
 
 loadTab = function(fn, column_labels){
-	# generic load tab
+	# Loads output from coevolution wrapper output as data.frames
 	tab = read.table(fn, sep='\t')
 	colnames(tab) = c('Virus_Column', 'Mammal_Column', column_labels)
 
@@ -15,7 +14,7 @@ loadTab = function(fn, column_labels){
 }
 
 fixNAs = function(tab, column_labels){
-	# set p_stat = 1 if stat == NA
+	# Set the p-value to 1 for scores with NA values
 	for(stat in column_labels){
 		p_stat = paste('p',stat,sep='_')
 		if(p_stat %in% column_labels){
@@ -27,21 +26,25 @@ fixNAs = function(tab, column_labels){
 }
 
 cleanWhats = function(Whats){
+	# Set NAs to minimum value in "Whats"
 	minWhat = min(Whats, na.rm=TRUE)
 	Whats[!is.finite(Whats)] = minWhat
 	return(Whats)
 }
 
 set_whatCmp = function(whatName, opt_what){
-# if we're looking at Pvalues or VarInf small numbers means coevolution
-# VarInf is a distance
+	# Set whether big or small values are better.
+	# If looking at Pvalues or Distances (eg. VI) small values indicate coevolution
+	
 	if(opt_what == 'Pvalue' | opt_what == 'Rank' | whatName == 'VarInf'){
 		return('<')
 	}
 	return('>')
 }
 
-addRank = function(tab, column_labels){
+addPemp = function(tab, column_labels){
+	# Calculate Pempirical values for scores given in "column_labels"
+	# and add them to "tab" data.frame
 	rank_these_labels = grep('^p_', column_labels, invert=TRUE, value=TRUE)
 	for(label in rank_these_labels){
 		flip = (set_whatCmp(label, 'Score') == '<')
@@ -50,7 +53,7 @@ addRank = function(tab, column_labels){
 		if(flip){
 			R = 1 - ecdf(-x)(-x)
 		} else {
-			R = 1 - ecdf(x)(x)
+			R = 1 - ecdf(x)(x) # could also use: rank(x, ties.method='max') / length(x)
 		}
 		tab[, rlabel] = R
 	}
@@ -84,7 +87,7 @@ loadTab_infStats = function(fn, suff=NULL){
 	}
 	tab = loadTab(fn, column_labels)
 	tab = fixNAs(tab, column_labels)
-	tab = addRank(tab, column_labels)
+	tab = addPemp(tab, column_labels)
 	tab = addZscore(tab, column_labels)
 	return(tab)
 }
@@ -97,7 +100,7 @@ loadTab_mfdca = function(fn, suff=NULL){
 	tab = loadTab(fn, column_labels)
 #	tab[, column_labels[c(3,4)]] = tab[, column_labels[c(3,4)]] / 1000 # hard coded
 	tab = fixNAs(tab, column_labels)
-	tab = addRank(tab, column_labels)
+	tab = addPemp(tab, column_labels)
 	#tab = addZscore(tab, column_labels[1]) # add zscores for dcaMI only
 	tab = addZscore(tab, column_labels) # add zscores for dcaMI and dcaDI
 	return(tab)
@@ -111,7 +114,7 @@ loadTab_plmdca = function(fn, suff=NULL){
 	tab = loadTab(fn, column_labels)
 #	tab[ , column_labels[2] ]= tab[, column_labels[2] / 1000 # hard coded
 	tab = fixNAs(tab, column_labels)
-	tab = addRank(tab, column_labels)
+	tab = addPemp(tab, column_labels)
 	return(tab)
 }
 
@@ -123,7 +126,7 @@ loadTab_psicov = function(fn, suff=NULL){
 	tab = loadTab(fn, column_labels)
 #	tab[, column_labels[2]] = tab[, column_labels[2]] / 1000 # hard coded
 	tab = fixNAs(tab, column_labels)
-	tab = addRank(tab, column_labels)
+	tab = addPemp(tab, column_labels)
 	return(tab)
 }
 
@@ -135,7 +138,7 @@ loadTab_hpdca = function(fn, suff=NULL){
 	tab = loadTab(fn, column_labels)
 #	tab[, column_labels[2] ] = tab[, column_labels[2] ] / 1000 # hard coded
 	tab = fixNAs(tab, column_labels)
-	tab = addRank(tab, column_labels)
+	tab = addPemp(tab, column_labels)
 	return(tab)
 }
 
