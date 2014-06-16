@@ -36,7 +36,7 @@ set_whatCmp = function(whatName, opt_what){
 	# Set whether big or small values are better.
 	# If looking at Pvalues or Distances (eg. VI) small values indicate coevolution
 	
-	if(opt_what == 'Pvalue' | opt_what == 'Rank' | whatName == 'VarInf'){
+	if(opt_what == 'Pvalue' | opt_what == 'Rank' | whatName == 'VI'){
 		return('<')
 	}
 	return('>')
@@ -80,10 +80,10 @@ addPnorm = function(tab, column_labels){
 
 loadTab_infCalc = function(fn, suff=NULL){
 	column_labels = c('Vir_Entropy', 'Mam_Entropy', 'Joint_Entropy',
-						'MutInf', 'VarInf',
-						'Zmin_MutInf', 'Zjoint_MutInf',
-						'p_MutInf', 'p_VarInf',
-						'p_Zmin_MutInf', 'p_Zjoint_MutInf')
+						'MI', 'VI',
+						'MIminh', 'MIj',
+						'p_MI', 'p_VI',
+						'p_MIminh', 'p_MIj')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
 	}
@@ -95,7 +95,7 @@ loadTab_infCalc = function(fn, suff=NULL){
 }
 
 loadTab_mfDCA = function(fn, suff=NULL){
-	column_labels = c('dcaMI', 'dcaDI', 'p_dcaMI', 'p_dcaDI')
+	column_labels = c('MIw', 'DI', 'p_MIw', 'p_DI')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
 	}
@@ -109,7 +109,7 @@ loadTab_mfDCA = function(fn, suff=NULL){
 }
 
 loadTab_plmDCA = function(fn, suff=NULL){
-	column_labels = c('plmDCA', 'p_plmDCA')
+	column_labels = c('DIplm', 'p_DIplm')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
 	}
@@ -133,7 +133,7 @@ loadTab_psicov = function(fn, suff=NULL){
 }
 
 loadTab_hpDCA = function(fn, suff=NULL){
-	column_labels = c('hpDCA', 'p_hpDCA')
+	column_labels = c('hpDI', 'p_hpDI')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
 	}
