@@ -1,9 +1,9 @@
 # tabIO.R -- read various types of "tab" files
 
-#cat('loadTab_mfdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
-#cat('loadTab_plmdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
+#cat('loadTab_mfDCA() is hard coded to assume 1000 bootstraps\n', file=stderr())
+#cat('loadTab_plmDCA() is hard coded to assume 1000 bootstraps\n', file=stderr())
 #cat('loadTab_psicov() is hard coded to assume 1000 bootstraps\n', file=stderr())
-#cat('loadTab_hpdca() is hard coded to assume 1000 bootstraps\n', file=stderr())
+#cat('loadTab_hpDCA() is hard coded to assume 1000 bootstraps\n', file=stderr())
 
 loadTab = function(fn, column_labels){
 	# Loads output from coevolution wrapper output as data.frames
@@ -78,7 +78,7 @@ addPnorm = function(tab, column_labels){
 	return(tab)
 }
 
-loadTab_infStats = function(fn, suff=NULL){
+loadTab_infCalc = function(fn, suff=NULL){
 	column_labels = c('Vir_Entropy', 'Mam_Entropy', 'Joint_Entropy',
 						'MutInf', 'VarInf',
 						'Zmin_MutInf', 'Zjoint_MutInf',
@@ -94,7 +94,7 @@ loadTab_infStats = function(fn, suff=NULL){
 	return(tab)
 }
 
-loadTab_mfdca = function(fn, suff=NULL){
+loadTab_mfDCA = function(fn, suff=NULL){
 	column_labels = c('dcaMI', 'dcaDI', 'p_dcaMI', 'p_dcaDI')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
@@ -108,7 +108,7 @@ loadTab_mfdca = function(fn, suff=NULL){
 	return(tab)
 }
 
-loadTab_plmdca = function(fn, suff=NULL){
+loadTab_plmDCA = function(fn, suff=NULL){
 	column_labels = c('plmDCA', 'p_plmDCA')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
@@ -132,7 +132,7 @@ loadTab_psicov = function(fn, suff=NULL){
 	return(tab)
 }
 
-loadTab_hpdca = function(fn, suff=NULL){
+loadTab_hpDCA = function(fn, suff=NULL){
 	column_labels = c('hpDCA', 'p_hpDCA')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
