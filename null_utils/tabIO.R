@@ -79,6 +79,8 @@ addPnorm = function(tab, column_labels){
 }
 
 loadTab_infCalc = function(fn, suff=NULL){
+	# Load tab output from infCalc
+	# after processing with make_tab.py and optionally fix_dummy_pvalues.py
 	column_labels = c('Vir_Entropy', 'Mam_Entropy', 'Joint_Entropy',
 						'MI', 'VI',
 						'MIminh', 'MIj',
@@ -95,6 +97,8 @@ loadTab_infCalc = function(fn, suff=NULL){
 }
 
 loadTab_mfDCA = function(fn, suff=NULL){
+	# Load tab output from (mean field) DCA package
+	# after processing with make_tab.py and optionally fix_dummy_pvalues.py
 	column_labels = c('MIw', 'DI', 'p_MIw', 'p_DI')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
@@ -109,6 +113,8 @@ loadTab_mfDCA = function(fn, suff=NULL){
 }
 
 loadTab_plmDCA = function(fn, suff=NULL){
+	# Load tab output from (symmetric) plmDCA package
+	# after processing with make_tab.py and optionally fix_dummy_pvalues.py
 	column_labels = c('DIplm', 'p_DIplm')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
@@ -121,6 +127,8 @@ loadTab_plmDCA = function(fn, suff=NULL){
 }
 
 loadTab_psicov = function(fn, suff=NULL){
+	# Load tab output from PSICOV package
+	# after processing with make_tab.py and optionally fix_dummy_pvalues.py
 	column_labels = c('psicov', 'p_psicov')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
@@ -133,6 +141,8 @@ loadTab_psicov = function(fn, suff=NULL){
 }
 
 loadTab_hpDCA = function(fn, suff=NULL){
+	# Load tab output from hpDCA package
+	# after processing with make_tab.py and optionally fix_dummy_pvalues.py
 	column_labels = c('hpDI', 'p_hpDI')
 	if(!is.null(suff)){
 		column_labels = paste(column_labels, suff, sep='_')
