@@ -7,6 +7,7 @@ output from various coevolution programs.
 See EXAMPLE.md in each subdirectory for usage
 
 1. `fmt_utils/` - formatting scripts
+2. `null_utils/` - R functions for loading scores and calculating p-values
 2. `wrappers/` - wrappers for coevolution and phylogeny inference programs
 3. `sge/` - example scripts for SGE cluster environments
 4. `struct/` - wrappers for visualizing scores on protein structures
