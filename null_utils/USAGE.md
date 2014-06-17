@@ -1,4 +1,5 @@
 # Usage - Null model utilities #
+See `../example/example.R`
 
 ## `tabIO.R` ##
 Functions for loading tab delimited `.tab`s from coevolution method wrappers as data.frames
