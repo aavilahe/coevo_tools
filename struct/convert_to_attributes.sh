@@ -4,7 +4,7 @@
 __SRC_PATH="$(dirname $0)" # change if you move or link
 
 
-USG="usage: $0 results.tab orthos.fa refid chain prot.pdb > prot_chain.attr"
+USG="usage: $0 summary_results.tab orthos.fa refid chain prot.pdb > prot_chain.attr"
 
 if [ $# -ne 5 ]; then
 	echo ${USG}
