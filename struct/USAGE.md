@@ -7,45 +7,32 @@ Wrapper that takes care of mapping columns to residues and formatting
 results as chimera residue attributes.
 
 ```bash
-usage: ./convert_to_attributes.sh results.tab orthos.phy \
+usage: ./convert_to_attributes.sh summary_results.tab orthos.fa \
                                   refid chain prot.pdb > prot_chain.attr
-example: ./convert_to_attributes.sh BestVifCoevoStats.tab vif.phy \
-                                  0_HIV1_h b 4N9F.pdb1 > 4N9F_b.attr
-```
-
-### `extract_seq.py` ##
-Extracts residues and resnum for specified chain from ATOM records.
-Output is tab delimited.
-- Column 1: resnum
-- Column 2: residue
-
-```bash
-usage: ./extract_seq.py protX.pdb B > protX_chainB.residues
+example: ./convert_to_attributes.sh BestVifCoevoStats.tab vif.fa \
+                                  0_HIV1_h_L b 4N9F.pdb1 > 4N9F_b.attr
 ```
 
 ### `map_column_to_resnum.py` ###
 Maps alignment columns to resnums and prints a mapping of
 Alignment columns to PDB chain resnums.
 
-Takes phylip alignment as input and generates 3 intermediate mappings:
-
-1. Alignment column to reference sequence position
-2. Reference sequence position to PDB chain sequence position
-3. PDB chain sequence position to PDB chain resnum
+**Assumes sequence alignment in fasta format**
 
 **Requires a sequence aligner that outputs a _fasta_ alignment**
 
 ```python
-# check lines 11, 121 in map_column_to_resnum.py
-ALIGNER_AND_OPTIONS = 'msaprobs -num_threads 12 %s' # %s is the input filename
-.
-.
-.
-aln_results = Popen( (ALIGNER_AND_OPTIONS % tmpfn).split(), stdout=PIPE ).communicate()[0] # keep stdout
+# check lines 21, 22, 92 in map_column_to_resnum.py
+   21    PROFILE_ALN_AND_OPTIONS = 'fmuscle -profile -in1 %s -in2 %s -out /dev/stdout'
+   22    PAIRWISE_ALN_AND_OPTIONS = 'needle -auto -asequence %s -bsequence %s -stdout -aformat3 fasta'
+   .
+   .
+   .
+   92        cmd = (CMD_TEMPLATE % (fa1, fa2)).split()
 ```
 
 ```bash
-usage: ./map_column_to_resnum.py Xref Xorthos.phy protX_chainB.residues > protX_chainB.col2res
+usage: python ./map_column_to_resnum.py -r refid chain prot.pdb orthos.fa > prot.pdb_chain.col2res
 ```
 
 ### `make_attributes.py` ###
@@ -57,6 +44,6 @@ co-evolution analysis results.
 - Columns 2-last: summary scores, p-values, or labels to be converted to attributes.
 
 ```bash
-usage: make_attributes.py XSummaryResults.tab protX_chainB.col2res > protX_chainB.attr
+usage: make_attributes.py summary_results.tab prot.pdb_chain.col2res > prot_chain.attr
 ```
 

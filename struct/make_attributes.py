@@ -10,7 +10,7 @@ def read_colmap(fh):
 	
 	'''
 
-	return dict([ line.split() for line in fh.readlines() ])
+	return dict([ line.split()[:2] for line in fh.readlines() ])
 
 def read_results(fh):
 	''' read results, return (list of column names, list of rows of columns)
