@@ -58,5 +58,5 @@ if __name__ == "__main__":
     cfg = sys.argv[1]
     cfg_d = json.load(open(cfg, 'r'))
     cmd = ctmp_commandline(cfg_d)
-    #print >>sys.stderr, "running %s" % ' '.join(cmd)
-    Popen(cmd, stdout=PIPE).communicate()
+    print >>sys.stderr, "running %s" % ' '.join(cmd)
+    Popen(cmd).communicate()
